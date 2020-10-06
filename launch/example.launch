@@ -1,0 +1,12 @@
+<launch>
+    <!-- Parameters -->
+    <param name="fixed_frame_id" type="str" value="map" />
+    <param name="resolution" type="double" value="0.05" />
+    <param name="free_sample_distance" type="double" value="0.5" />
+
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find akimap)/rviz/example.rviz" />
+
+    <!-- Example -->
+    <node pkg="akimap" type="akimap_example" name="akimap_example" output="screen" />
+</launch>
