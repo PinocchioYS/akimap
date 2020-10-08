@@ -79,7 +79,7 @@ public:
      * Convert types of data between continuous and discretized spaces.
      */
     inline AKIMapKey::key_type coordinate_to_key(double _coordinate) const {
-        return AKIMapKey::key_type(((int)std::floor(RESOLUTION_FACTOR * _coordinate)) + TREE_MAX_VAL);
+        return AKIMapKey::key_type(((int)std::floor(RESOLUTION_FACTOR * _coordinate)) + GRID_MAX_VAL);
     }
     inline AKIMapKey coordinate_to_key(double _x, double _y, double _z) const {
         return AKIMapKey(coordinate_to_key(_x), coordinate_to_key(_y), coordinate_to_key(_z));
@@ -89,7 +89,7 @@ public:
     }
 
     inline double key_to_coordinate(AKIMapKey::key_type _key) const {
-        return ((double)((int)_key - TREE_MAX_VAL) + 0.5) * RESOLUTION;
+        return ((double)((int)_key - GRID_MAX_VAL) + 0.5) * RESOLUTION;
     }
     inline Eigen::Vector3d key_to_coordinate(AKIMapKey::key_type _kx, AKIMapKey::key_type _ky, AKIMapKey::key_type _kz) const {
         return { key_to_coordinate(_kx), key_to_coordinate(_ky), key_to_coordinate(_kz) };
@@ -99,7 +99,7 @@ public:
     }
 
     inline AKIMapKey::key_type key_to_blockkey(AKIMapKey::key_type _key) const {
-        return (AKIMapKey::key_type)((((unsigned)((int)_key - TREE_MAX_VAL) >> BLOCK_DEPTH) << BLOCK_DEPTH) + TREE_MAX_VAL);
+        return (AKIMapKey::key_type)((((unsigned)((int)_key - GRID_MAX_VAL) >> BLOCK_DEPTH) << BLOCK_DEPTH) + GRID_MAX_VAL);
     }
     inline AKIMapKey key_to_blockkey(const AKIMapKey& _key) const {
         return AKIMapKey(key_to_blockkey(_key[0]), key_to_blockkey(_key[1]), key_to_blockkey(_key[2]));
@@ -137,7 +137,7 @@ protected:
 
     const Eigen::Matrix3d COV_NOISE = Eigen::Matrix3d::Identity() * 0.001;
 
-    const int TREE_MAX_VAL = 32768;
+    const int GRID_MAX_VAL = 32768;
 
     const Eigen::MatrixXd TRANSFORMED_KERNEL_SUPPORT_BBX = (Eigen::MatrixXd(3, 8) <<
             1.0,  1.0,  1.0,  1.0, -1.0, -1.0, -1.0, -1.0,
