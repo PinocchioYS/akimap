@@ -94,7 +94,7 @@ void AKIMap::make_occupancy_samples(const Eigen::MatrixXd& _pointcloud, const Ei
 
         // Make a random sample on a sensor ray
         for(unsigned int i = 0; i < occupieds.cols(); i++) {
-            double dist = FREE_SAMPLE_DISTANCE * 0.5;
+            double dist = 0.0;
             while (dist < length(i)) {
                 double random_sample_dist = dist + dis(gen);
                 if(random_sample_dist >= length(i))
